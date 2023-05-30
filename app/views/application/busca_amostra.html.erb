@@ -1,0 +1,215 @@
+<!-- app/views/busca/index.html.erb -->
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Tela de Busca</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700&display=swap');
+
+    * {
+      margin: 0;
+      border: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Poppins", sans-serif;
+    }
+
+    body {
+      background: linear-gradient(45deg, #000000, #ffffff);
+      background-repeat: no-repeat;
+      min-height: 100vh;
+      min-width: 100vw;
+      display: grid;
+      place-items: center;
+    }
+
+    .grid-container {
+      background: white;
+      min-width: 500px;
+      min-height: 50vh;
+      padding: 2rem;
+      box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.2);
+      border-radius: 8px;
+      position: relative;
+    }
+
+    .logo {
+      font-weight: 600;
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .search-box {
+      display: flex;
+      align-items: center;
+      margin-bottom: 1rem;
+    }
+
+    .search-input {
+      flex: 1;
+      padding: 0.5rem;
+      border-radius: 4px;
+      border: 1px solid #ccc;
+      font-size: 1rem;
+    }
+
+    .search-button {
+      background-color: #333333;
+      color: white;
+      padding: 0.5rem 1rem;
+      border: none;
+      border-radius: 4px;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+
+    .search-button:hover {
+      background-color: #555555;
+    }
+
+    .tabs {
+      display: flex;
+      margin-bottom: 1rem;
+    }
+
+    .tab {
+      padding: 0.5rem 1rem;
+      background-color: #f2f2f2;
+      cursor: pointer;
+      border-radius: 4px;
+      margin-right: 0.5rem;
+    }
+
+    .tab.active {
+      background-color: #ddd;
+    }
+
+    .pages {
+      display: none;
+    }
+
+    .pages.active-page {
+      display: block;
+    }
+
+    table {
+      width: 100%;
+      text-align: center;
+    }
+
+    th, td {
+      padding: 0.5rem;
+    }
+
+    th {
+      font-weight: 600;
+    }
+
+    .print-button {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      background-color: black;
+      color: white;
+      padding: 0.5rem 1rem;
+      border: none;
+      border-radius: 2px;
+      font-size: 1.2rem;
+      cursor: pointer;
+    }
+
+    .print-button:hover {
+      background-color: #333333;
+    }
+
+    .retirar-button:hover{
+      background-color: #333333;
+    }
+
+    .retirar-button {
+      position: absolute;
+      top: 1rem;
+      right: 8rem;
+      background-color: black;
+      color: white;
+      padding: 0.5rem 1rem;
+      border: none;
+      border-radius: 2px;
+      font-size: 1.2rem;
+      cursor: pointer;
+    }
+
+    .checkbox-cell {
+      text-align: center;
+    }
+
+    .export-pages {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+   <div class="grid-container">
+    <div class="logo">Minha Tela de Busca</div>
+    <%= form_tag(busca_amostra_path, method: :get) do %> <!-- Corrigido o caminho do formulário para busca_amostra_path -->
+      <div class="search-box">
+        <%= text_field_tag :search_query, params[:search_query], placeholder: "Digite sua busca...", class: "search-input" %>
+        <%= submit_tag "Buscar", class: "search-button" %>
+      </div>
+    <% end %>
+    <ul class="autocomplete-list"></ul>
+    <div class="tabs">
+      <div class="tab active">Resultados</div>
+      <div class="tab">Favoritos</div>
+    </div>
+    <!-- app/views/application/busca_amostra.html.erb -->
+
+<div class="pages active-page">
+  <% if @resultados.any? %>
+    <table id="resultados">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Nome</th>
+          <th>Descrição</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @resultados.each do |resultado| %>
+          <tr>
+            <td><%= resultado.id %></td>
+            <td><%= resultado.nome %></td>
+            <td><%= resultado.descricao %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  <% else %>
+    <p>Nenhum resultado encontrado.</p>
+  <% end %>
+</div>
+
+  </div>
+
+  <script>
+       document.addEventListener("DOMContentLoaded", function() {
+      const searchButton = document.querySelector(".search-button");
+
+      searchButton.addEventListener("click", function() {
+        const searchQuery = document.querySelector(".search-input").value;
+        console.log("Realizando busca por: " + searchQuery);
+
+        // Fazendo requisição AJAX para buscar os resultados
+        fetch("/busca_amostra?search_query=" + encodeURIComponent(searchQuery))
+          .then(response => response.text())
+          .then(data => {
+            const tableBody = document.querySelector("#resultados tbody");
+            tableBody.innerHTML = data;
+          })
+          .catch(error => console.log(error));
+      });
+    });
+  </script>
+</body>
+</html>

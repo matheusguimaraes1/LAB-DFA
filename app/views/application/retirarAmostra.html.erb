@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Lab-DFA | Retirar Amostra</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700&display=swap');
+
+        * {
+            margin: 0;
+            border: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Poppins", sans-serif;
+        }
+
+        body {
+            background: linear-gradient(45deg, #000000, #ffffff);
+            background-repeat: no-repeat;
+            min-height: 100vh;
+            min-width: 100vw;
+            display: grid;
+            place-items: center;
+        }
+
+        .grid-container {
+            background: white;
+            min-width: 500px;
+            min-height: 50vh;
+            padding: 2rem;
+            box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+            position: relative;
+        }
+
+        .logo {
+            font-weight: 600;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .search-box {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .search-input {
+            flex: 1;
+            padding: 0.5rem;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+            font-size: 1rem;
+        }
+
+        .tabs {
+            display: flex;
+            margin-bottom: 1rem;
+        }
+
+        .tab {
+            padding: 0.5rem 1rem;
+            background-color: #f2f2f2;
+            cursor: pointer;
+            border-radius: 4px;
+            margin-right: 0.5rem;
+        }
+
+        .tab.active {
+            background-color: #ddd;
+        }
+
+        .pages {
+            display: none;
+        }
+
+        .pages.active-page {
+            display: block;
+        }
+
+        table {
+            width: 100%;
+            text-align: center;
+        }
+
+        th, td {
+            padding: 0.5rem;
+        }
+
+        th {
+            font-weight: 600;
+        }
+
+        .print-button {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background-color: black;
+            color: white;
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 2px;
+            font-size: 1.2rem;
+            cursor: pointer;
+        }
+
+        .print-button:hover {
+            background-color: #333333;
+        }
+
+        .retirar-button:hover{
+            background-color: #333333;
+        }
+
+        .retirar-button {
+            position: absolute;
+            top: 1rem;
+            right: 8rem;
+            background-color: black;
+            color: white;
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 2px;
+            font-size: 1.2rem;
+            cursor: pointer;
+        }
+
+        .checkbox-cell {
+            text-align: center;
+        }
+
+        .export-pages {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="grid-container">
+        <div class="logo">Retirar Amostra</div>
+        <div class="search-box">
+            <input type="text" class="search-input" placeholder="Pesquisar">
+        </div>
+        <div class="tabs">
+            <div class="tab active" onclick="changePage('grupo1')">Inova</div>
+            <div class="tab" onclick="changePage('grupo2')">ZikaAlliance</div>
+            <div class="tab" onclick="changePage('grupo3')">GAB</div>
+        </div>
+        <div class="pages active-page" id="grupo1">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Código</th>
+                        <th>Responsável pelo Cadastro</th>
+                        <th>Data da Coleta</th>
+                        <th>Selecionar</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Adicione os dados do grupo 1 aqui -->
+                    <tr>
+                        <td>10001</td>
+                        <td>Sangue Total</td>
+                        <td>17/10/2019</td>
+                        <td class="checkbox-cell"><input type="checkbox"></td>
+                    </tr>
+                    <tr>
+                        <td>10002</td>
+                        <td>Plasma</td>
+                        <td>17/10/2019</td>
+                        <td class="checkbox-cell"><input type="checkbox"></td>
+                    </tr>
+                    <tr>
+                        <td>10003</td>
+                        <td>Soro</td>
+                        <td>17/10/2019</td>
+                        <td class="checkbox-cell"><input type="checkbox"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="pages" id="grupo2">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Código</th>
+                        <th>Material</th>
+                        <th>Data da Coleta</th>
+                        <th>Selecionar</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Adicione os dados do grupo 2 aqui -->
+                    <tr>
+                        <td>David</td>
+                        <td>29</td>
+                        <td>NY</td>
+                        <td class="checkbox-cell"><input type="checkbox"></td>
+                    </tr>
+                    <tr>
+                        <td>Eva</td>
+                        <td>36</td>
+                        <td>CA</td>
+                        <td class="checkbox-cell"><input type="checkbox"></td>
+                    </tr>
+                    <tr>
+                        <td>Fernando</td>
+                        <td>31</td>
+                        <td>TX</td>
+                        <td class="checkbox-cell"><input type="checkbox"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="pages" id="grupo3">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Código</th>
+                        <th>Material</th>
+                        <th>Data da Coleta</th>
+                        <th>Selecionar</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Adicione os dados do grupo 3 aqui -->
+                    <tr>
+                        <td>Gabriel</td>
+                        <td>27</td>
+                        <td>FL</td>
+                        <td class="checkbox-cell"><input type="checkbox"></td>
+                    </tr>
+                    <tr>
+                        <td>Helen</td>
+                        <td>33</td>
+                        <td>WA</td>
+                        <td class="checkbox-cell"><input type="checkbox"></td>
+                    </tr>
+                    <tr>
+                        <td>Isabella</td>
+                        <td>30</td>
+                        <td>IL</td>
+                        <td class="checkbox-cell"><input type="checkbox"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <button class="print-button" onclick="exportData()">Imprimir</button>
+        <button class="retirar-button" onclick="retirarAmostra()">Retirar Amostra</button>
+
+    </div>
+
+    <script>
+
+    function changePage(pageId) {
+    var pages = document.getElementsByClassName("pages");
+    for (var i = 0; i < pages.length; i++) {
+      pages[i].classList.remove("active-page");
+    }
+
+    var selectedPage = document.getElementById(pageId);
+    selectedPage.classList.add("active-page");
+
+    // Fazer uma solicitação AJAX para buscar os dados da tabela amostras_biorepositorio
+    fetch('/api/amostras_biorepositorio')
+      .then(response => response.json())
+      .then(data => {
+        // Limpar a tabela
+        var tableBody = selectedPage.querySelector('tbody');
+        tableBody.innerHTML = '';
+
+        // Preencher a tabela com os dados
+        data.forEach(item => {
+          var row = document.createElement('tr');
+
+          var codigoCell = document.createElement('td');
+          codigoCell.innerText = item.numero_amostra;
+          row.appendChild(codigoCell);
+
+          var materialCell = document.createElement('td');
+          materialCell.innerText = item.resp_cadastro;
+          row.appendChild(materialCell);
+
+          var dataColetaCell = document.createElement('td');
+          dataColetaCell.innerText = item.data_coleta;
+          row.appendChild(dataColetaCell);
+
+          var selecionarCell = document.createElement('td');
+          selecionarCell.classList.add('checkbox-cell');
+          var checkbox = document.createElement('input');
+          checkbox.type = 'checkbox';
+          selecionarCell.appendChild(checkbox);
+          row.appendChild(selecionarCell);
+
+          tableBody.appendChild(row);
+        });
+      })
+      .catch(error => {
+        console.error('Ocorreu um erro ao buscar os dados:', error);
+      });
+  }
+        function exportData() {
+            var selectedCheckboxes = document.querySelectorAll('input[type="checkbox"]:checked');
+            var data = [];
+
+            selectedCheckboxes.forEach(function (checkbox) {
+                var row = checkbox.parentNode.parentNode;
+                var rowData = {
+                    nome: row.cells[0].innerText,
+                    idade: row.cells[1].innerText,
+                    estado: row.cells[2].innerText
+                };
+                data.push(rowData);
+            });
+
+            if (data.length > 0) {
+                // Simulando o download de um arquivo
+                var jsonData = JSON.stringify(data);
+                var filename = "data.json";
+                var blob = new Blob([jsonData], { type: "application/json" });
+                var url = URL.createObjectURL(blob);
+
+                var a = document.createElement("a");
+                a.href = url;
+                a.download = filename;
+                a.click();
+
+                // Limpa a URL criada
+                URL.revokeObjectURL(url);
+            } else {
+                alert("Nenhum item selecionado para exportar.");
+            }
+        }
+
+        changePage('grupo1');
+    </script>
+</body>
+</html>

@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="icon" href="https://cdn3.iconfinder.com/data/icons/font-awesome-solid/512/dna-256.png" type="image/x-icon">
+    <title>Home | LAB-DFA </title>
+    <style>
+       @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700&display=swap');
+
+        * {
+            margin: 0;
+            border: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Poppins", sans-serif;
+        }
+
+        body {
+            background: linear-gradient(45deg, #000000, #ffffff);
+            background-repeat: no-repeat;
+            min-height: 100vh;
+            min-width: 100vw;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .container {
+            background: white;
+            min-width: 500px;
+            min-height: 50vh;
+            padding: 2rem;
+            box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+        }
+
+        .logo {
+            font-weight: 600;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .menu {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .chart {
+            margin-top: 2rem;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .chart-title {
+            text-align: center;
+            font-weight: 600;
+            font-size: 1.2rem;
+            padding: 1rem;
+            background-color: #f2f2f2;
+        }
+
+        .chart-canvas {
+            border-radius: 8px;
+        }
+
+        .options {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: center;
+            margin-top: 2rem;
+        }
+
+        .options-icon {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 0 0.5rem;
+        }
+
+        .options-icon .options-name {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            background-color: black;
+            color: white;
+            border-radius: 4px;
+            text-decoration: none;
+            cursor: pointer;
+            margin-bottom: 0.5rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo">LAB-DFA</div>
+        <div class="menu">
+            <%= select_tag 'projeto', options_for_select(['Inova', 'ZikaAlliance', 'GAB']), class: 'form-control' %>
+            <a href="#"><img src="https://img.icons8.com/material-rounded/24/000000/settings.png"/></a>
+        </div>
+        <div class="chart">
+            <div class="chart-title">Aumento de amostras no biorepositório</div>
+            <canvas id="myChart" class="chart-canvas"></canvas>
+        </div>
+        <div class="options">
+            <%= link_to cadastrar_nova_amostra_path, target: "_blank" do %>
+                <div class="options-icon">
+                    <span class="options-name">Cadastrar nova amostra</span>
+                </div>
+            <% end %>
+
+            <%= link_to retirar_amostra_path, target: "_blank" do %>
+                <div class="options-icon">
+                    <span class="options-name">Retirar amostra</span>
+                </div>
+            <% end %>
+
+            <%= link_to busca_amostra_path, target: "_blank" do %>
+                <div class="options-icon">
+                    <span class="options-name">Fazer busca de uma amostra</span>
+                </div>
+            <% end %>
+        </div>
+    </div>
+
+    <!-- Adicionando o script do Chart.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+
+    <!-- Criando o gráfico com JavaScript -->
+    <script>
+        // Dados do gráfico
+        var xValues = [2017, 2018, 2019, 2020, 2021];
+        var yValues = [120, 150, 180, 210, 240];
+
+        // Criando o objeto do gráfico
+        var myChart = new Chart("myChart", {
+            type: "bar",
+            data: {
+                labels: xValues,
+                datasets: [{
+                    backgroundColor: ["grey", "grey", "grey", "orange", "brown"],
+                    data: yValues
+                }]
+            },
+            options: {
+                legend: { display: false },
+                title: {
+                    display: true,
+                    text: "Número de amostras por ano"
+                },
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            min: 0,
+                            max: 300
+                        }
+                    }]
+                }
+            }
+        });
+    </script>
+</body>
+</html>

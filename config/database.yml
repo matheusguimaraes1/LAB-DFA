@@ -1,0 +1,30 @@
+# Configurando para PostGreSQL:
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  timeout: 5000
+
+development:
+  <<: *default
+  database: labdfa_hom
+  username: postgres
+  password: 3467
+  host: localhost
+  port: 5432
+
+test:
+  <<: *default
+  database: labdfa_test
+  username: postgres
+  password: 3467
+  host: localhost
+  port: 5432
+
+production:
+  <<: *default
+  database: labdfa_production
+  username: postgres
+  password: 3467
+  host: localhost
+  port: 5432
