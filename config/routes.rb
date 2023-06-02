@@ -14,6 +14,12 @@ Rails.application.routes.draw do
 
   get '/api/amostras_biorepositorio', to: 'amostras_biorepositorio#index'
 
+  get '/coleta', to: 'coleta#new'
+
+  #get '/coleta', to: 'coleta#create'
+  post '/coleta', to: 'coleta#create'
+
+
   # Define a rota raiz ("/")
   root 'application#login'
 

@@ -4,7 +4,7 @@ class AmostrasController < ApplicationController
     if amostra.save
       flash[:notice] = "Amostra Registrada"
     else
-      # tratar erro ao salvar amostra
+      flash[:notice] = "Amostra não foi registrada por algum motivo :("
     end
   end
 end
