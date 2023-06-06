@@ -5,7 +5,7 @@ class ApplicationController < ActionController::Base
       senha = params[:senha]
 
       # Verifique as credenciais do usuário (substitua esta lógica com sua própria autenticação)
-      if usuario == "admin" && senha == "password"
+      if usuario == "admin" && senha == "346722"
         # Se as credenciais estiverem corretas, redirecione para a página de sucesso ou faça a lógica necessária
         redirect_to root_path, notice: "Login bem-sucedido!"
       else

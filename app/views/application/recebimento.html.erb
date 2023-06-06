@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Coletora de Amostras</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700&display=swap');
+
+        * {
+            margin: 0;
+            border: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Poppins", sans-serif;
+        }
+
+        body {
+            background: linear-gradient(45deg, #000000, #ffffff);
+            background-repeat: no-repeat;
+            min-height: 100vh;
+            min-width: 100vw;
+            display: grid;
+            place-items: center;
+        }
+
+        .grid-container {
+            background: white;
+            max-width: 500px;
+            padding: 2rem;
+            box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+            position: relative;
+            text-align: center;
+        }
+
+        .logo {
+            font-weight: 600;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 0.5rem;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+            font-size: 1rem;
+        }
+
+        button {
+            margin-top: 1rem;
+            background-color: black;
+            color: white;
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 2px;
+            font-size: 1.2rem;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #333333;
+        }
+
+        .success-message {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #4CAF50;
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 4px;
+            z-index: 9999;
+        }
+
+        table {
+            width: 100%;
+            margin-top: 1rem;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 0.5rem;
+            border: 1px solid #ccc;
+        }
+
+        th {
+            background-color: #f2f2f2;
+            font-weight: 600;
+            text-align: left;
+        }
+
+        .centered-heading {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="grid-container">
+        <h1 class="logo">Selecione a Coletora</h1>
+            <label for="coletora">Selecione a Coletora:</label>
+                <select id="coletora" name="coletora" onchange="filtrar(this.value)">
+                <% @amostras.each do |amostra| %>
+                    <option value="<%= amostra.nome_coletora %>"><%= amostra.nome_coletora %></option>
+                <% end %>
+                </select>
+
+
+
+        <h2 class="centered-heading">Amostras Coletadas</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Nome do Paciente</th>
+                    <th>Tipo de Material</th>
+                    <th>Data da Coleta</th>
+                    <th>Amostra Recebida</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% @amostras.each do |registro| %>
+                    <tr>
+                    <td><%= registro.nome_paciente %></td>
+                    <td><%= registro.tipo_material %></td>
+                    <td><%= registro.data_coleta %></td>
+                    <td><input type="checkbox"></td>
+                    </tr>
+                <% end %>
+            </tbody>
+
+        </table>
+        <div id="registros_coletora"></div>
+        <button>Receber Amostras</button>
+    </div>
+    <script>
+  function filtrar(coletora) {
+    fetch('/recebimento/filtrar?coletora=' + coletora)
+      .then(response => response.text())
+      .then(data => {
+        document.getElementById('registros_coletora').innerHTML = data;
+      });
+  }
+</script>
+
+</body>
+</html>

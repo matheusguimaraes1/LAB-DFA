@@ -15,9 +15,17 @@ Rails.application.routes.draw do
   get '/api/amostras_biorepositorio', to: 'amostras_biorepositorio#index'
 
   get '/coleta', to: 'coleta#new'
-
-  #get '/coleta', to: 'coleta#create'
   post '/coleta', to: 'coleta#create'
+
+  get '/recebimento', to: 'recebimento#received'
+  post '/recebimento', to: 'recebimento#received'
+
+  #get '/recebimento/filtrar', to: 'recebimento#filtrar', as: :recebimento_filtrar
+  post '/recebimento/filtrar', to: 'recebimento#filtrar', as: :recebimento_filtrar
+
+#get '/recebimento/filtrar', to: 'recebimento#filtrar'
+  #post '/recebimento', to: 'recebimento#received'
+
 
 
   # Define a rota raiz ("/")
