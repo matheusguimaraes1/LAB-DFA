@@ -3,7 +3,7 @@
 <head>
     <title>Coletora de Amostras</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700&display=swap');
+	       @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700&display=swap');
 
         * {
             margin: 0;
@@ -103,14 +103,15 @@
 <body>
     <div class="grid-container">
         <h1 class="logo">Selecione a Coletora</h1>
-            <label for="coletora">Selecione a Coletora:</label>
-                <select id="coletora" name="coletora" onchange="filtrar(this.value)">
+        <%= form_tag(filtrar_recebimento_path, method: :post, id: 'filtro-form') do %>
+         <label for="coletora">Selecione a Coletora:</label>
+            <select id="coletora" name="coletora" onchange="document.getElementById('filtro-form').submit()">
                 <% @amostras.each do |amostra| %>
                     <option value="<%= amostra.nome_coletora %>"><%= amostra.nome_coletora %></option>
                 <% end %>
-                </select>
-
-
+            </select>
+            <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+        <% end %>
 
         <h2 class="centered-heading">Amostras Coletadas</h2>
         <table>
@@ -123,29 +124,35 @@
                 </tr>
             </thead>
             <tbody>
-                <% @amostras.each do |registro| %>
+                <% @registros.each do |registro| %>
                     <tr>
-                    <td><%= registro.nome_paciente %></td>
-                    <td><%= registro.tipo_material %></td>
-                    <td><%= registro.data_coleta %></td>
-                    <td><input type="checkbox"></td>
+                        <td><%= registro.nome_paciente %></td>
+                        <td><%= registro.tipo_material %></td>
+                        <td><%= registro.data_coleta %></td>
+                        <td><input type="checkbox"></td>
                     </tr>
                 <% end %>
             </tbody>
-
         </table>
         <div id="registros_coletora"></div>
         <button>Receber Amostras</button>
     </div>
-    <script>
-  function filtrar(coletora) {
-    fetch('/recebimento/filtrar?coletora=' + coletora)
-      .then(response => response.text())
-      .then(data => {
-        document.getElementById('registros_coletora').innerHTML = data;
-      });
-  }
-</script>
+
+        <script>
+                function filtrar(coletora) {
+                    fetch('/recebimento/filtrar', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded'
+                    },
+                    body: 'coletora=' + encodeURIComponent(coletora)
+                    })
+                    .then(response => response.text())
+                    .then(data => {
+                    document.getElementById('registros_coletora').innerHTML = data;
+                    });
+                }
+        </script>
 
 </body>
 </html>
