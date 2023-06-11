@@ -10,7 +10,9 @@ Rails.application.routes.draw do
   get '/login/retirar_amostra', to: 'home#retirar_amostra', as: :retirar_amostra
   post '/login/retirar_amostra', to: 'home#retirar_amostra', as: :retirar_amostra_post
 
-  get '/busca_amostra', to: 'home#busca_amostra', as: :busca_amostra
+  get '/busca_amostra', to: 'home#busca_amostra', as: 'busca_amostra'
+  #get '/busca_amostra', to: 'home#busca_amostra', as: :busca_amostra
+  #get '/busca_amostra', to: 'busca#busca_amostra'
 
   get '/api/amostras_biorepositorio', to: 'amostras_biorepositorio#index'
 

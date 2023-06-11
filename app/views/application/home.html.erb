@@ -24,14 +24,15 @@
             justify-content: center;
         }
 
-        .container {
-            background: white;
-            width: 40%; /* Reduzido em 30% */
-            min-height: 100%%; /* Reduzido em 30% */
-            padding: 1rem;
-            box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.2);
-            border-radius: 8px;
-        }
+            .container {
+                background: white;
+                width: 800px; /* Reduzido em 30% */
+                height: 900px; /* Adicionado uma altura fixa de 500 pixels */
+                padding: 1rem;
+                box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.2);
+                border-radius: 8px;
+            }
+
 
         .logo {
             font-weight: 600;
@@ -48,7 +49,6 @@
         .chart {
             margin-top: 1rem;
             border-radius:  5px;
-            overflow: hidden;
         }
 
         .chart-title {
@@ -68,6 +68,10 @@
             flex-wrap: wrap;
             justify-content: center;
             margin-top: 2rem;
+            position: center;
+            top: 90%;
+            right: 1rem;
+            transform: translateY(-50%);
         }
 
         .options-icon {

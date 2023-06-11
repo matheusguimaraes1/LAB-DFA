@@ -240,6 +240,19 @@ form input[type="submit"]:hover {
   border-radius: 5px;
 }
 
+.ok-sign {
+  display: inline;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100vh;
+}
+
+.ok-sign img {
+  width: 50px; /* Ajuste o tamanho conforme necessário */
+  height: auto;
+}
+
     </style>
 </head>
 <body>
@@ -269,9 +282,30 @@ form input[type="submit"]:hover {
     <option value="gab">GAB</option>
     <option value="coorte-dengue">Coorte Dengue</option>
   </select>
+  <select name="tipo_amostra" id="tipo_amostra" required>
+    <option value="">Selecione o tipo de amostra</option>
+    <option value="Soro">Soro</option>
+    <option value="Sangue Total">Sangue Total</option>
+    <option value="Plasma">Plasma</option>
+    <option value="Urina">Urina</option>
+  </select>
   <input type="text" name="pessoa" placeholder="Pessoa que cadastrou a amostra" required>
   <input type="submit" value="CADASTRAR NOVA AMOSTRA">
 </form>
+
+<div class="notice">
+  <% if flash[:notice].present? %>
+    <div class="ok-sign">
+      <img src="https://cdn-icons-png.flaticon.com/512/190/190411.png?w=740&t=st=1686441433~exp=1686442033~hmac=9d8a19fbab79d6e80c848d7a2fe7cf83ee7fc83d7c72bb41ea5061455f71d7f3">
+    </div>
+    <script>
+      setTimeout(function() {
+        document.querySelector('.ok-sign').style.display = 'none';
+      }, 4000);
+    </script>
+  <% end %>
+</div>
+
 
     </div>
     </div>

@@ -150,66 +150,64 @@
   </style>
 </head>
 <body>
-   <div class="grid-container">
+  <div class="grid-container">
     <div class="logo">Minha Tela de Busca</div>
-    <%= form_tag(busca_amostra_path, method: :get) do %> <!-- Corrigido o caminho do formulário para busca_amostra_path -->
-      <div class="search-box">
-        <%= text_field_tag :search_query, params[:search_query], placeholder: "Digite sua busca...", class: "search-input" %>
-        <%= submit_tag "Buscar", class: "search-button" %>
-      </div>
-    <% end %>
+    <div class="search-box">
+      <input type="text" id="search-input" placeholder="Digite sua busca..." class="search-input">
+      <button onclick="filterResults()" class="search-button">Buscar</button>
+    </div>
     <ul class="autocomplete-list"></ul>
     <div class="tabs">
       <div class="tab active">Resultados</div>
       <div class="tab">Consultadas Recentemente</div>
     </div>
-    <!-- app/views/application/busca_amostra.html.erb -->
-
-<div class="pages active-page">
-  <% if @resultados.any? %>
-    <table id="resultados">
-      <thead>
-        <tr>
-          <th>PID</th>
-          <th>Data do Cadastro</th>
-          <th>Tipo de Material</th>
-        </tr>
-      </thead>
-      <tbody>
-        <% @resultados.each do |resultado| %>
-          <tr>
-            <td><%= resultado.id %></td>
-            <td><%= resultado.nome %></td>
-            <td><%= resultado.descricao %></td>
-          </tr>
-        <% end %>
-      </tbody>
-    </table>
-  <% else %>
-    <p>Nenhum resultado encontrado.</p>
-  <% end %>
-</div>
-
+    <div class="pages active-page">
+      <% if @resultados.any? %>
+        <table id="resultados">
+          <thead>
+            <tr>
+              <th>PID</th>
+              <th>Data do Cadastro</th>
+              <th>Tipo de Material</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @resultados.each do |resultado| %>
+              <tr>
+                <td><%= resultado.numero_amostra %></td>
+                <td><%= resultado.data_coleta %></td>
+                <td><%= resultado.tipo_material %></td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      <% else %>
+        <p>Nenhum resultado encontrado.</p>
+      <% end %>
+    </div>
   </div>
 
   <script>
-       document.addEventListener("DOMContentLoaded", function() {
-      const searchButton = document.querySelector(".search-button");
+    function filterResults() {
+      const searchQuery = document.querySelector("#search-input").value.toLowerCase();
+      const rows = document.querySelectorAll("#resultados tbody tr");
 
-      searchButton.addEventListener("click", function() {
-        const searchQuery = document.querySelector(".search-input").value;
-        console.log("Realizando busca por: " + searchQuery);
+      rows.forEach(row => {
+        const pid = row.querySelector("td:nth-child(1)").innerText.toLowerCase();
+        const dataCadastro = row.querySelector("td:nth-child(2)").innerText.toLowerCase();
+        const tipoMaterial = row.querySelector("td:nth-child(3)").innerText.toLowerCase();
 
-        // Fazendo requisição AJAX para buscar os resultados
-        fetch("/busca_amostra?search_query=" + encodeURIComponent(searchQuery))
-          .then(response => response.text())
-          .then(data => {
-            const tableBody = document.querySelector("#resultados tbody");
-            tableBody.innerHTML = data;
-          })
-          .catch(error => console.log(error));
+        if (
+          pid.includes(searchQuery) ||
+          dataCadastro.includes(searchQuery) ||
+          tipoMaterial.includes(searchQuery)
+        ) {
+          row.style.display = "";
+        } else {
+          row.style.display = "none";
+        }
       });
-    });
+    }
   </script>
 </body>
 </html>

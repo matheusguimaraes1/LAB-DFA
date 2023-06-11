@@ -1,3 +1,5 @@
+require "action_controller/railtie"
+
 class ApplicationController < ActionController::Base
   def login
     if request.post?  # Verifica se o formulário foi enviado via POST
